@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import controllers.IdController;
@@ -57,8 +58,8 @@ public class URLShell {
             for (int i = 0; i < commands.length; i++) {
                 //System.out.println(commands[i]); //***check to see if parsing/split worked***
                 list.add(commands[i]);
-
             }
+
             //System.out.print(list); //***check to see if list was added correctly***
             history.add(commandLine);
             try {
@@ -71,10 +72,54 @@ public class URLShell {
 
                 // Specific Commands.
 
+                if (list.get(0).equals("help")) {
+                    System.out.println("------------- IDS -------------\nids <method> <method options>\nids POST/PUT <user_id> <username> <github handle>\n-------------------------------");
+                    continue;
+                }
+
                 // ids
                 if (list.get(0).contains("ids")) {
                     String results = urll.get_ids();
                     URLShell.prettyPrint(results);
+
+                    String commandType = list.size() > 1 ? list.get(1) : null;
+                    if (commandType != null) {
+                        switch (commandType.toUpperCase()) {
+                            case "POST": {
+                                boolean hasArgs = list.size() == 5;
+                                if (hasArgs) {
+                                    String uid = list.get(2);
+
+                                    boolean doesIdExist = urll.doesIdExist(uid);
+                                    if (!doesIdExist) {
+                                        String name = list.get(3);
+                                        String github = list.get(4);
+                                        urll.postId(uid, github, name);
+                                    } else {
+                                        System.out.printf("Id %s already exists\n", uid);
+                                    }
+                                }
+                                break;
+                            }
+                            case "PUT": {
+                                boolean hasArgs = list.size() >= 4;
+                                if (hasArgs) {
+                                    String uid = list.get(2);
+
+                                    boolean doesIdExist = urll.doesIdExist(uid);
+                                    if (doesIdExist) {
+                                        String name = list.get(3);
+                                        String github = list.size() == 5 ? list.get(4) : null;
+                                        urll.putId(uid, github, name);
+                                    } else {
+                                        System.out.printf("Id %s does not exist\n", uid);
+                                    }
+                                }
+                                break;
+                            }
+                        }
+                    }
+
                     continue;
                 }
 
@@ -84,7 +129,6 @@ public class URLShell {
                     URLShell.prettyPrint(results);
                     continue;
                 }
-                // you need to add a bunch more.
 
                 //!! command returns the last command in history
                 if (list.get(list.size() - 1).equals("!!")) {
@@ -94,25 +138,25 @@ public class URLShell {
                 // there is BUG in this code, can you find it?
                 else if (list.get(list.size() - 1).charAt(0) == '!') {
                     int b = Character.getNumericValue(list.get(list.size() - 1).charAt(1));
-                    if (b <= history.size())//check if integer entered isn't bigger than history size
+                    if (b < history.size()) //check if integer entered isn't bigger than history size
                         pb.command(history.get(b));
                 } else {
                     pb.command(list);
                 }
 
                 // // wait, wait, what curiousness is this?
-                // Process process = pb.start();
+                 Process process = pb.start();
 
                 // //obtain the input stream
-                // InputStream is = process.getInputStream();
-                // InputStreamReader isr = new InputStreamReader(is);
-                // BufferedReader br = new BufferedReader(isr);
+                 InputStream is = process.getInputStream();
+                 InputStreamReader isr = new InputStreamReader(is);
+                 BufferedReader br = new BufferedReader(isr);
 
                 // //read output of the process
-                // String line;
-                // while ((line = br.readLine()) != null)
-                //     System.out.println(line);
-                // br.close();
+                 String line;
+                 while ((line = br.readLine()) != null)
+                     System.out.println(line);
+                 br.close();
 
 
             } finally {

@@ -2,9 +2,8 @@ package youareell;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
-
 import controllers.*;
+import models.Id;
 
 public class YouAreEll {
     private TransactionController tt;
@@ -23,12 +22,27 @@ public class YouAreEll {
     }
 
     public String get_ids() {
-        List<models.Id> allIds = tt.getIds();
+        List<Id> allIds = tt.getIds();
         StringBuilder sb = new StringBuilder();
         for (models.Id id : allIds) {
             sb.append(id.toString()+"\n");
         }
         return sb.toString();
+    }
+
+    public boolean doesIdExist(String uid) {
+        List<Id> allIds = tt.getIds();
+        return allIds.stream().filter(e -> e.getUserid().equals(uid)).count() == 1;
+    }
+
+    public String postId(String userId, String githubName, String name) {
+        String createdId = tt.postId(userId, name, githubName);
+        return createdId;
+    }
+
+    public String putId(String userId, String githubName, String name) {
+        String updatedId = tt.putId(userId, githubName, name);
+        return updatedId;
     }
 
     public String get_messages() {

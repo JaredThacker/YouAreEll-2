@@ -19,22 +19,30 @@ public class TransactionController {
         return idCtrl.getIds();
     }
 
-    public String getId(String id) {
-        return null;
-    }
-    public String putId(String id) {
-        return null;
+    public Id getId(String id) {
+        return idCtrl.getId(id);
     }
 
-    public String deleteId(String id) {
-        return null;
+    public String putId(String existingUid, String newGithubName, String newUsername) {
+        Id tid = new Id(existingUid, newUsername, newGithubName);
+        idCtrl.putId(tid);
+        return String.format("Id %s updated", existingUid);
     }
 
-    public String postId(String idtoRegister, String githubName) {
-        // Id tid = new Id(idtoRegister, githubName);
-        // tid = idCtrl.postId(tid);
-        // return ("Id registered.");
-        return null;
+    public Id deleteId(Id id) {
+        return idCtrl.deleteId(id);
+    }
+
+    public String postId(String idToRegister, String githubName) {
+         Id tid = new Id(idToRegister, githubName);
+         idCtrl.postId(tid);
+         return String.format("Id %s registered", idToRegister);
+    }
+
+    public String postId(String userId, String username, String githubName) {
+        Id tid = new Id(userId, username, githubName);
+        idCtrl.postId(tid);
+        return "Id registered.";
     }
 
     public List<Message> getMessages() {

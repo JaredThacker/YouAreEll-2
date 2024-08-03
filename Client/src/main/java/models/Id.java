@@ -10,6 +10,11 @@ public class Id {
 
     public Id() {}
 
+    public Id(String uid, String githubName) {
+        this.userid = uid;
+        this.github = githubName;
+    }
+
     public Id(String uid, String name, String github) {
         this.userid = uid;
         this.name = name;

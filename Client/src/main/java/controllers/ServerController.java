@@ -1,5 +1,9 @@
 package controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import models.Id;
+
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -13,9 +17,9 @@ import java.util.Scanner;
 //this class calls the server and returns the string to the calling controller
 
 public class ServerController {
-    private String rootURL = "http://zipcode.rocks:8085";
+    private final String rootURL = "http://zipcode.rocks:8085";
 
-    private static ServerController svr = new ServerController();
+    private static final ServerController svr = new ServerController();
 
     private ServerController() {
     }
@@ -27,21 +31,21 @@ public class ServerController {
     /**
      * Sends a GET or POST request to the specified URL.
      *
-     * @param url      The URL to send the request to
+     * @param resource      The URL to send the request to
      * @param method   Either "GET" or "POST"
      * @param body     The body of the request, if any
      * @return         A string containing the response from the server
      */
     public String sendRequest(String resource, String method, String body) {
         try {
-            String urn = rootURL + resource;
-            URL obj = new URL(urn);
+            String url = rootURL + resource;
+            URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             con.setRequestMethod(method);
             con.setRequestProperty("User-Agent", "Mozilla/5.0");
             
 
-            if (method.equals("POST")) {
+            if (method.equals("POST") || method.equals("PUT")) {
                 // Send POST request using the body parameter
                 con.setDoOutput(true);
                 DataOutputStream wr = new DataOutputStream(con.getOutputStream());
@@ -72,24 +76,6 @@ public class ServerController {
             return "";
         }
     }
-    
-    public String getMessages() {
-        return sendRequest("/messages", "GET", "");
-    }
-    
-    public String getIds() {
-        return sendRequest("/ids", "GET", "");
-    }
-
-    public static void main(String[] args) {
-        ServerController me = ServerController.shared();
-        System.out.println("Ids ************");
-        System.out.println(me.getIds());
-        // System.out.println("Messages ************");
-        // System.out.println(me.getMessages());
-
-    }
-
 }
 
 // ServerController.shared.doGet()

@@ -21,8 +21,9 @@ public class MessageController {
         sc = shared;
         messagesSeen = new HashSet<Message>();
     }
+
     public ArrayList<Message> getMessages() {
-       String jsonInput = sc.getMessages();
+       String jsonInput = sc.sendRequest("/messages", "GET", "");
         // convert json to array of Ids
         ObjectMapper mapper = new ObjectMapper();
         List<Message> msgs;
@@ -39,12 +40,15 @@ public class MessageController {
         }
         return null;
     }
+
     public ArrayList<Message> getMessagesForId(Id Id) {
         return null;
     }
+
     public Message getMessageForSequence(String seq) {
         return null;
     }
+
     public ArrayList<Message> getMessagesFromFriend(Id myId, Id friendId) {
         return null;
     }
