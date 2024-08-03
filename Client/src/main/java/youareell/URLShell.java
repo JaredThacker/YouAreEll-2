@@ -73,7 +73,7 @@ public class URLShell {
                 // Specific Commands.
 
                 if (list.get(0).equals("help")) {
-                    System.out.println("------------- IDS -------------\nids <method> <method options>\nids POST/PUT <user_id> <username> <github handle>\n-------------------------------");
+                    System.out.println("----------------------------- IDS -----------------------------------\nids <method> <method options>\nids POST/PUT <user_id> <username> <github handle>\n \t\t\t\t\t\t\t\t\t\t *user_id required with put* \n---------------------------------------------------------------------");
                     continue;
                 }
 
