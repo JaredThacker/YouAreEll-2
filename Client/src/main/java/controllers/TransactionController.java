@@ -49,6 +49,10 @@ public class TransactionController {
         return msgCtrl.getMessages();
     }
 
+    public List<Message> getMessagesById(String id){
+        return msgCtrl.getMessagesForId(id);
+    }
+
     public String postMessage(String idFrom, String idTo, String message){
         Message m = new Message(message, idFrom, idTo);
         msgCtrl.postMessage(idFrom, idTo, m);
