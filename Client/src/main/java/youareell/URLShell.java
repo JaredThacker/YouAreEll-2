@@ -75,7 +75,8 @@ public class URLShell {
                 // Specific Commands.
 
                 if (list.get(0).equals("help")) {
-                    System.out.println("----------------------------- IDS -----------------------------------\nids <method> <method options>\nids POST/PUT <user_id> <username> <github handle>\n \t\t\t\t\t\t\t\t\t\t *user_id required with put* \n---------------------------------------------------------------------");
+                    System.out.println("----------------------------- IDS -----------------------------------\nids <method> <method options>\nids POST/PUT <user_id> <username> <github handle>\n \t\t\t\t\t\t\t\t\t\t *user_id required with put* \n----------------------------- MSG -----------------------------------");
+                    System.out.println("messages <method> <method options>\nmessages POST <from> <to> <message> \n---------------------------------------------------------------------");
                     continue;
                 }
 
@@ -137,6 +138,7 @@ public class URLShell {
                                     String to = list.get(3);
                                     String body = list.get(4);
                                     urll.postMessage(from, to, body);
+                                    break;
                                 }
                             }
                         }

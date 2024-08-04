@@ -62,5 +62,4 @@ public class MessageController {
             throw new RuntimeException(e);
         }
     }
- 
 }
