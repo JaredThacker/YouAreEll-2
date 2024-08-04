@@ -4,6 +4,7 @@ import java.util.List;
 
 import controllers.*;
 import models.Id;
+import models.Message;
 
 public class YouAreEll {
     private TransactionController tt;
@@ -52,6 +53,11 @@ public class YouAreEll {
             sb.append(msg.toString()+"\n");
         }
         return sb.toString();
+    }
+
+    public String postMessage(String from, String to, String body){
+        String post = tt.postMessage(from,to,body);
+        return post;
     }
 
 

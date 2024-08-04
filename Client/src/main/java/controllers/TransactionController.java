@@ -48,4 +48,10 @@ public class TransactionController {
     public List<Message> getMessages() {
         return msgCtrl.getMessages();
     }
+
+    public String postMessage(String idFrom, String idTo, String message){
+        Message m = new Message(message, idFrom, idTo);
+        msgCtrl.postMessage(idFrom, idTo, m);
+        return "Message was posted";
+    }
 }

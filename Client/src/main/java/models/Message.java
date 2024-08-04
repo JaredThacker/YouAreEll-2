@@ -20,8 +20,8 @@ public class Message implements Comparable<Message> {
     private String message = "";
     private String toid = "";
     private String fromid = "";
-    private String timestamp = "";
-    private String sequence = "";
+    private String timestamp = "2023-08-06T18:45:21.083445025Z";
+    private String sequence = "ea9ccec875bbbbdcca464eb59718ae7cba9def95";
 
     public Message() {
     }

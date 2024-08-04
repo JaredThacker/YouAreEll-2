@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.List;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import models.Id;
@@ -13,6 +12,8 @@ import models.Message;
 
 public class MessageController {
     ServerController sc;
+    private ObjectMapper objectMapper = new ObjectMapper();
+
 
     private HashSet<Message> messagesSeen;
     // why a HashSet??
@@ -33,8 +34,6 @@ public class MessageController {
             ArrayList<Message> msgList = new ArrayList<>(msgs);
             // return array of Ids
             return msgList;
-        } catch (JsonMappingException e) {
-            System.out.println("Error processing JSON from response: " + e.getMessage());
         } catch (JsonProcessingException e) {
             System.out.println("Error processing JSON from response: " + e.getMessage());
         }
@@ -53,8 +52,15 @@ public class MessageController {
         return null;
     }
 
-    public Message postMessage(Id myId, Id toId, Message msg) {
-        return null;
+    public Message postMessage(String myId, String toId, Message msg) {
+        try {
+            msg.setFromid(myId);
+            msg.setToid(toId);
+            sc.sendRequest("/ids/" + msg.getFromid() + "/messages", "POST", objectMapper.writeValueAsString(msg));
+            return msg;
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
  
 }
