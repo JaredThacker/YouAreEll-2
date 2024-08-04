@@ -63,8 +63,12 @@ public class YouAreEll {
     public String getMessagesById(String id) {
         List<models.Message> latestM = tt.getMessagesById(id);
         StringBuilder sb = new StringBuilder();
-        for (models.Message msg : latestM) {
-            sb.append(msg.toString()+"\n");
+        if (latestM != null){
+            for (models.Message msg : latestM) {
+                sb.append(msg.toString()+"\n");
+            }
+        } else {
+            return "No messages yet, or this user doesnt exist.\n";
         }
         return sb.toString();
     }
