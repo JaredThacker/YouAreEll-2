@@ -47,7 +47,9 @@ public class MessageController {
         List<Message> msgs;
         try {
             msgs = mapper.readValue(jsonInput, mapper.getTypeFactory().constructCollectionType(List.class, Message.class));
-
+            if (msgs == null){
+                return null;
+            }
             ArrayList<Message> msgList = new ArrayList<>(msgs);
             // return array of Ids
             return msgList;

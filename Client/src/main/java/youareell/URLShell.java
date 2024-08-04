@@ -41,7 +41,7 @@ public class URLShell {
         //we break out with <ctrl c>
         while (true) {
             //read what the user enters
-            System.out.println("cmd? ");
+            System.out.println("cmd? (type help for command list)");
             commandLine = console.readLine();
 
             //input parsed into array of strings(command and arguments)
@@ -75,8 +75,8 @@ public class URLShell {
                 // Specific Commands.
 
                 if (list.get(0).equals("help")) {
-                    System.out.println("----------------------------- IDS -----------------------------------\nids <method> <method options>\nids POST/PUT <user_id> <username> <github handle>\n \t\t\t\t\t\t\t\t\t\t *user_id required with put* \n----------------------------- MSG -----------------------------------");
-                    System.out.println("messages <method> <method options>\nmessages POST <from> <to> <message> \nmessages GET <id> \n---------------------------------------------------------------------");
+                    System.out.println("----------------------------- IDS -----------------------------------\nids -> returns all ids \nids <method> <method options>\nids POST/PUT <user_id> <username> <github handle>\n \t\t\t\t\t\t\t\t\t\t *user_id required with put* \n----------------------------- MSG -----------------------------------");
+                    System.out.println("messages -> returns last 20 messages \nmessages <method> <method options>\nmessages POST <from> <to> <message> \nmessages GET <id> \n---------------------------------------------------------------------");
                     continue;
                 }
 
@@ -151,11 +151,11 @@ public class URLShell {
                             case "GET": {
                                 boolean hasArgs = list.size() == 3;
                                 if (hasArgs) {
-                                    String id = list.get(2);
-                                    String msgById = urll.getMessagesById(id);
+                                    String uid = list.get(2);
+                                    String msgById = urll.getMessagesById(uid);
                                     URLShell.prettyPrint(msgById);
-                                    break;
                                 }
+                                break;
                             }
                         }
                     }
