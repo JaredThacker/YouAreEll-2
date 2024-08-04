@@ -12,6 +12,8 @@ import controllers.IdController;
 import controllers.MessageController;
 import controllers.ServerController;
 import controllers.TransactionController;
+import models.Id;
+import models.Message;
 
 // URLShell is a Console view for youareell.YouAreEll.
 public class URLShell {
@@ -125,6 +127,22 @@ public class URLShell {
 
                 // messages
                 if (list.get(0).contains("messages")) {
+                    String commandType = list.size() > 1 ? list.get(1) : null;
+                    if (commandType != null) {
+                        switch (commandType.toUpperCase()){
+                            case "POST": {
+                                boolean hasArgs = list.size() == 5;
+                                if (hasArgs) {
+                                    String from = list.get(2);
+                                    String to = list.get(3);
+                                    String body = list.get(4);
+                                    urll.postMessage(from, to, body);
+                                    System.out.println("message was posted");
+                                }
+                            }
+                        }
+                    }
+
                     String results = urll.get_messages();
                     URLShell.prettyPrint(results);
                     continue;
