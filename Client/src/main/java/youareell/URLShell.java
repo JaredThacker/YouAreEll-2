@@ -75,7 +75,8 @@ public class URLShell {
                 // Specific Commands.
 
                 if (list.get(0).equals("help")) {
-                    System.out.println("----------------------------- IDS -----------------------------------\nids <method> <method options>\nids POST/PUT <user_id> <username> <github handle>\n \t\t\t\t\t\t\t\t\t\t *user_id required with put* \n---------------------------------------------------------------------");
+                    System.out.println("----------------------------- IDS -----------------------------------\nids <method> <method options>\nids POST/PUT <user_id> <username> <github handle>\n \t\t\t\t\t\t\t\t\t\t *user_id required with put* \n----------------------------- MSG -----------------------------------");
+                    System.out.println("messages <method> <method options>\nmessages POST <from> <to> <message> \nmessages GET <id> \n---------------------------------------------------------------------");
                     continue;
                 }
 
@@ -126,6 +127,11 @@ public class URLShell {
                 }
 
                 // messages
+                if (list.get(0).contains("messages") && list.size() == 1) {
+                    String results = urll.get_messages();
+                    URLShell.prettyPrint(results);
+                }
+
                 if (list.get(0).contains("messages")) {
                     String commandType = list.size() > 1 ? list.get(1) : null;
                     if (commandType != null) {
@@ -137,12 +143,22 @@ public class URLShell {
                                     String to = list.get(3);
                                     String body = list.get(4);
                                     urll.postMessage(from, to, body);
+                                    String results = urll.get_messages();
+                                    URLShell.prettyPrint(results);
+                                    break;
+                                }
+                            }
+                            case "GET": {
+                                boolean hasArgs = list.size() == 3;
+                                if (hasArgs) {
+                                    String id = list.get(2);
+                                    String msgById = urll.getMessagesById(id);
+                                    URLShell.prettyPrint(msgById);
+                                    break;
                                 }
                             }
                         }
                     }
-                    String results = urll.get_messages();
-                    URLShell.prettyPrint(results);
                     continue;
                 }
 

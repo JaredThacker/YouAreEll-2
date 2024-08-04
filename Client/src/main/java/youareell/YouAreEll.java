@@ -60,5 +60,12 @@ public class YouAreEll {
         return post;
     }
 
-
+    public String getMessagesById(String id) {
+        List<models.Message> latestM = tt.getMessagesById(id);
+        StringBuilder sb = new StringBuilder();
+        for (models.Message msg : latestM) {
+            sb.append(msg.toString()+"\n");
+        }
+        return sb.toString();
+    }
 }

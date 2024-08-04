@@ -40,7 +40,20 @@ public class MessageController {
         return null;
     }
 
-    public ArrayList<Message> getMessagesForId(Id Id) {
+    public ArrayList<Message> getMessagesForId(String Id) {
+        String jsonInput = sc.sendRequest("/ids/" + Id + "/messages", "GET", "");
+        // convert json to array of Ids
+        ObjectMapper mapper = new ObjectMapper();
+        List<Message> msgs;
+        try {
+            msgs = mapper.readValue(jsonInput, mapper.getTypeFactory().constructCollectionType(List.class, Message.class));
+
+            ArrayList<Message> msgList = new ArrayList<>(msgs);
+            // return array of Ids
+            return msgList;
+        } catch (JsonProcessingException e) {
+            System.out.println("Error processing JSON from response: " + e.getMessage());
+        }
         return null;
     }
 
@@ -62,5 +75,4 @@ public class MessageController {
             throw new RuntimeException(e);
         }
     }
- 
 }
