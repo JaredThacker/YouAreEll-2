@@ -1,6 +1,8 @@
 package models;
 
-/* 
+import java.time.OffsetDateTime;
+
+/*
  * POJO for an Message object
  *
  *   {
@@ -20,8 +22,8 @@ public class Message implements Comparable<Message> {
     private String message = "";
     private String toid = "";
     private String fromid = "";
-    private String timestamp = "2023-08-06T18:45:21.083445025Z";
-    private String sequence = "ea9ccec875bbbbdcca464eb59718ae7cba9def95";
+    private String timestamp = OffsetDateTime.now().toString();
+    private String sequence = "";
 
     public Message() {
     }

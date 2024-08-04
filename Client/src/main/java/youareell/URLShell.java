@@ -137,12 +137,10 @@ public class URLShell {
                                     String to = list.get(3);
                                     String body = list.get(4);
                                     urll.postMessage(from, to, body);
-                                    System.out.println("message was posted");
                                 }
                             }
                         }
                     }
-
                     String results = urll.get_messages();
                     URLShell.prettyPrint(results);
                     continue;
